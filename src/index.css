@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in;
+}
+```
+
+4. Save
+
+---
+
+### **Step 9: Create `src/App.jsx` (THE BIG ONE)**
+
+1. With `src` folder selected, click "New File"
+2. Type: `App.jsx`
+3. Go back to my previous message where I pasted the full calculator code
+4. Copy ALL of it (scroll up to find it - it starts with `import React, { useState }`)
+5. Paste it into `App.jsx`
+6. Save
+
+---
+
+**Your folder structure in the left sidebar should now look like:**
+```
+exit-gap-calculator/
+├── package.json
+├── index.html
+├── vite.config.js
+├── tailwind.config.js
+├── postcss.config.js
+└── src/
+    ├── main.jsx
+    ├── index.css
+    └── App.jsx
