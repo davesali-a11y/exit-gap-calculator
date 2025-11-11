@@ -195,11 +195,24 @@ function App() {
   }
 
   const handleAnswer = (questionId, option) => {
-    setState({ 
-      ...state, 
-      answers: { ...state.answers, [questionId]: option },
-      currentStep: state.currentStep + 1
-    })
+    const newAnswers = { ...state.answers, [questionId]: option }
+    const nextStep = state.currentStep + 1
+    
+    // If this was the last question, show results immediately
+    if (nextStep === questions.length) {
+      setState({ 
+        ...state, 
+        answers: newAnswers,
+        currentStep: nextStep,
+        showResults: true
+      })
+    } else {
+      setState({ 
+        ...state, 
+        answers: newAnswers,
+        currentStep: nextStep
+      })
+    }
   }
 
   const nextStep = () => {
@@ -216,18 +229,20 @@ function App() {
     }
   }
 
-  const submitEmail = () => {
+  const submitEmail = (e) => {
+    e?.preventDefault() // Prevent form submission
     if (state.email && state.email.includes('@')) {
       console.log('=== EXIT GAP CALCULATOR SUBMISSION ===')
       console.log('Country:', state.country)
       console.log('Email:', state.email)
       console.log('Answers:', state.answers)
       console.log('Results:', calculateResults())
+      console.log('=====================================')
       setState({ ...state, showResults: true })
     }
   }
 
-  // Welcome Screen
+  // Welcome Screen - UPDATED COPY
   if (state.currentStep === -2) {
     return (
       <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center p-6">
@@ -236,18 +251,19 @@ function App() {
             What's Your<br/>Exit Gap?
           </h1>
           <p className="text-xl md:text-2xl text-slate-300 mb-4 leading-relaxed">
-            Most business owners leave £500k-£2M on the table.
+            The difference between what you think your business is worth<br/>
+            and what buyers will actually pay.
           </p>
           <p className="text-lg text-slate-400 mb-12">
-            Find out your number in 2 minutes.
+            Find out in 2 minutes. No email required.
           </p>
           <button 
             onClick={nextStep}
             className="bg-white text-slate-900 px-12 py-5 rounded-full text-xl font-bold hover:bg-slate-100 transition-all transform hover:scale-105 shadow-2xl"
           >
-            Start Calculator →
+            Calculate My Exit Gap →
           </button>
-          <p className="text-slate-500 text-sm mt-8">Takes 2 minutes • 10 questions • Free results</p>
+          <p className="text-slate-500 text-sm mt-8">Free • Instant • 10 questions</p>
         </div>
       </div>
     )
@@ -287,55 +303,12 @@ function App() {
     )
   }
 
-  // Email Capture
-  if (state.currentStep === questions.length) {
-    return (
-      <div className="min-h-screen bg-slate-900 text-white flex flex-col">
-        <div className="fixed top-0 left-0 right-0 h-1 bg-slate-800 z-50">
-          <div className="h-full bg-blue-500 transition-all duration-400" style={{ width: '100%' }} />
-        </div>
-        <div className="flex-1 flex items-center justify-center p-6 pt-16">
-          <div className="max-w-2xl w-full text-center">
-            <div className="text-6xl mb-6">✉️</div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              One more thing...
-            </h2>
-            <p className="text-xl text-slate-300 mb-12">
-              Enter your email to see your Exit Gap results
-            </p>
-            <input
-              type="email"
-              placeholder="your.email@example.com"
-              value={state.email}
-              onChange={(e) => setState({ ...state, email: e.target.value })}
-              onKeyUp={(e) => e.key === 'Enter' && submitEmail()}
-              className="w-full px-8 py-5 rounded-full bg-slate-800 border-2 border-slate-700 focus:border-blue-500 focus:outline-none text-xl text-center mb-6 text-white"
-              autoFocus
-            />
-            <button
-              onClick={submitEmail}
-              className="bg-white text-slate-900 px-12 py-5 rounded-full text-xl font-bold hover:bg-slate-100 transition-all transform hover:scale-105"
-            >
-              See My Results →
-            </button>
-            <p className="text-slate-500 text-sm mt-8">🔒 Private and secure. No spam ever.</p>
-            <button
-              onClick={prevStep}
-              className="mt-8 text-slate-400 hover:text-white transition-colors"
-            >
-              ← Back
-            </button>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  
 
-  // Results Screen
+  // Results Screen with proper email flow
   if (state.showResults) {
     const results = calculateResults()
     const curr = currencies[state.country]
-    const priceAmount = '50'
     
     return (
       <div className="min-h-screen bg-slate-900 text-white p-6 py-16">
@@ -381,60 +354,148 @@ function App() {
             </div>
           )}
 
-          <div className="bg-gradient-to-br from-blue-900 to-slate-900 rounded-3xl p-12 border-2 border-blue-700 mb-8">
-            <div className="text-center mb-8">
-              <h3 className="text-4xl font-bold mb-4">
-                The Most Valuable Piece of Paper<br/>in Your Business
-              </h3>
-              <p className="text-xl text-slate-300">
-                Most business owners get 50-page reports they never read.<br/>
-                <span className="font-bold text-white">This isn't that.</span>
-              </p>
-            </div>
+          {/* EMAIL CAPTURE - SHOWS FIRST */}
+          {!state.email && (
+            <div className="bg-gradient-to-br from-blue-900 to-slate-900 rounded-3xl p-12 border-2 border-blue-700 mb-8">
+              <div className="text-center mb-8">
+                <div className="text-5xl mb-4">📊</div>
+                <h3 className="text-4xl font-bold mb-4">
+                  What Do You Do Now?
+                </h3>
+                <p className="text-xl text-slate-300 mb-6">
+                  Good question. You've seen your {formatCurrency(Math.abs(results.exitGap))} gap.
+                  <br/>Now you need to know exactly how to close it.
+                </p>
+                <p className="text-lg text-slate-400 mb-6">
+                  Get a personalized report showing:
+                </p>
+                <div className="text-left max-w-md mx-auto space-y-3 text-slate-300 mb-8">
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-400 text-xl">✓</span>
+                    <span>The 3 specific moves to close YOUR gap (not generic advice)</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-400 text-xl">✓</span>
+                    <span>What to do THIS WEEK (your first action step)</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-400 text-xl">✓</span>
+                    <span>See where you rank against other businesses in your industry</span>
+                  </div>
+                </div>
+                <p className="text-sm text-slate-400">
+                  Your report is personally compiled. Delivery within 72 hours.
+                </p>
+              </div>
 
-            <div className="bg-slate-800 rounded-2xl p-8 mb-8">
-              <h4 className="font-bold text-xl mb-4">What's in The Checklist:</h4>
-              <div className="space-y-3 text-slate-300">
-                <div className="flex items-start gap-3">
-                  <span className="text-green-400 text-xl">✓</span>
-                  <span>The 3 moves to close YOUR {formatCurrency(Math.abs(results.exitGap))} gap</span>
+              <form onSubmit={submitEmail} className="max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="your.email@example.com"
+                  value={state.email}
+                  onChange={(e) => setState({ ...state, email: e.target.value })}
+                  className="w-full px-8 py-5 rounded-full bg-slate-800 border-2 border-slate-700 focus:border-blue-500 focus:outline-none text-xl text-center mb-6 text-white"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-white text-slate-900 px-12 py-5 rounded-full text-xl font-bold hover:bg-slate-100 transition-all transform hover:scale-105"
+                >
+                  Get My Personalized Report (Free) →
+                </button>
+              </form>
+              <p className="text-slate-500 text-sm mt-6 text-center">🔒 Private and secure. No spam ever.</p>
+            </div>
+          )}
+
+          {/* £50 OFFER - SHOWS AFTER EMAIL SUBMITTED */}
+          {state.email && (
+            <div className="bg-gradient-to-br from-blue-900 to-slate-900 rounded-3xl p-12 border-2 border-blue-700 mb-8">
+              <div className="text-center mb-8">
+                <div className="text-6xl mb-4">✅</div>
+                <h3 className="text-4xl font-bold mb-4">
+                  You're on the list.
+                </h3>
+                <p className="text-xl text-slate-300 mb-4">
+                  Check your inbox within 72 hours for your personalized report.
+                </p>
+                <p className="text-lg text-slate-400">
+                  Due to the number of business owners requesting reports, we're compiling them in order of submission.
+                </p>
+              </div>
+
+              <div className="border-t-2 border-slate-700 pt-8 mt-8">
+                <h3 className="text-3xl font-bold mb-4 text-center">
+                  Can't Wait 72 Hours?
+                </h3>
+                <p className="text-xl text-slate-300 mb-8 text-center">
+                  Jump the queue and get your action plan within 5 days.
+                </p>
+
+                <div className="bg-slate-950 rounded-2xl p-8 mb-8">
+                  <h4 className="font-bold text-2xl mb-6 text-center">The Most Valuable Piece of Paper in Your Business</h4>
+                  <div className="space-y-3 text-slate-300 mb-6">
+                    <div className="flex items-start gap-3">
+                      <span className="text-green-400 text-xl">✓</span>
+                      <span>The 3 specific moves to close YOUR {formatCurrency(Math.abs(results.exitGap))} gap</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="text-green-400 text-xl">✓</span>
+                      <span>What to do THIS WEEK (not "someday")</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="text-green-400 text-xl">✓</span>
+                      <span>Delivered within 5 days, personalized to your business</span>
+                    </div>
+                  </div>
+                  <p className="text-slate-400 text-sm text-center mb-6">
+                    One page. No fluff. Just what you need to do right now.
+                  </p>
                 </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-green-400 text-xl">✓</span>
-                  <span>What to do THIS WEEK (not "someday")</span>
+
+                <div className="text-center mb-8">
+                  <div className="text-7xl font-black mb-2">{curr.symbol}50</div>
+                  <div className="text-xl text-slate-300">One-time payment</div>
+                  <div className="text-sm text-slate-500 mt-2">Skip the 72-hour wait. Get yours in 5 days.</div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-green-400 text-xl">✓</span>
-                  <span>90-day implementation plan</span>
+
+                <button className="w-full bg-white text-slate-900 px-12 py-6 rounded-full text-2xl font-bold hover:bg-slate-100 transition-all transform hover:scale-105 mb-6">
+                  Jump The Queue - {curr.symbol}50 →
+                </button>
+
+                <div className="bg-slate-800 rounded-2xl p-6 text-center">
+                  <p className="text-slate-300 text-sm">
+                    Your gut has been telling you something needs to change.<br/>
+                    These numbers just confirmed it.<br/>
+                    <span className="font-bold text-white">The question is: how fast do you want to move?</span>
+                  </p>
                 </div>
               </div>
             </div>
+          )}
 
-            <div className="text-center mb-8">
-              <div className="text-slate-400 line-through text-lg mb-2">{curr.symbol}500</div>
-              <div className="text-7xl font-black mb-2">{curr.symbol}{priceAmount}</div>
-              <div className="text-xl text-slate-300">One {curr.symbol}{priceAmount} note</div>
-            </div>
-
-            <button className="w-full bg-white text-slate-900 px-12 py-6 rounded-full text-2xl font-bold hover:bg-slate-100 transition-all transform hover:scale-105 mb-8">
-              Get The Checklist →
-            </button>
-
-            <div className="bg-slate-950 rounded-2xl p-8 text-center">
-              <h4 className="font-bold text-xl mb-4 text-red-300">NO GUARANTEE. NO REFUNDS.</h4>
-              <p className="text-slate-300 text-sm mb-4">Trust your gut.</p>
-              <p className="text-slate-400 text-sm">
-                If your gut has been confirming what these numbers show...<br/>
-                if you're ready to actually DO something about it...<br/>
-                then put down one {curr.symbol}{priceAmount} note.
+         <div className="text-center">
+            <div className="bg-slate-800 rounded-3xl p-8 mb-6">
+              <h4 className="text-2xl font-bold mb-4">Can You Join The 85+ Club?</h4>
+              <p className="text-slate-300 mb-4">
+                You scored {results.score}/100.
+                <br/>Exit-ready businesses score 85+.
+              </p>
+              <p className="text-slate-400 text-sm mb-6">
+                Run the calculator again with best-practice answers to see what it takes:
+                <br/>• Fully documented systems
+                <br/>• 100+ five-star reviews  
+                <br/>• Business runs without you for 90 days
+              </p>
+              <p className="text-slate-300 font-semibold">
+                This shows you exactly what separates exit-ready from exit-hoping.
               </p>
             </div>
-          </div>
-
-          <div className="text-center">
-            <p className="text-slate-400 mb-4">Not ready to invest yet?</p>
-            <button className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
-              Just Send Me The Free Summary →
+            <button 
+              onClick={() => window.location.reload()}
+              className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-full text-lg font-bold transition-all transform hover:scale-105"
+            >
+              Try to Hit 85/100 →
             </button>
           </div>
         </div>
