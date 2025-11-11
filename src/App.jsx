@@ -3,12 +3,13 @@ import './index.css'
 
 function App() {
   const [state, setState] = useState({
-    currentStep: -2, // -2 = welcome, -1 = country selector, 0+ = questions
-    country: null,
-    answers: {},
-    email: '',
-    showResults: false
-  })
+  currentStep: -2,
+  country: null,
+  answers: {},
+  email: '',
+  emailSubmitted: false,
+  showResults: false
+})
 
   const currencies = {
     'UK': { symbol: '£', code: 'GBP', flag: '🇬🇧' },
@@ -230,17 +231,17 @@ function App() {
   }
 
   const submitEmail = (e) => {
-    e?.preventDefault() // Prevent form submission
-    if (state.email && state.email.includes('@')) {
-      console.log('=== EXIT GAP CALCULATOR SUBMISSION ===')
-      console.log('Country:', state.country)
-      console.log('Email:', state.email)
-      console.log('Answers:', state.answers)
-      console.log('Results:', calculateResults())
-      console.log('=====================================')
-      setState({ ...state, showResults: true })
-    }
+  e?.preventDefault()
+  if (state.email && state.email.includes('@')) {
+    console.log('=== EXIT GAP CALCULATOR SUBMISSION ===')
+    console.log('Country:', state.country)
+    console.log('Email:', state.email)
+    console.log('Answers:', state.answers)
+    console.log('Results:', calculateResults())
+    console.log('=====================================')
+    setState({ ...state, emailSubmitted: true })
   }
+}
 
   // Welcome Screen - UPDATED COPY
   if (state.currentStep === -2) {
@@ -355,7 +356,7 @@ function App() {
           )}
 
           {/* EMAIL CAPTURE - SHOWS FIRST */}
-          {!state.email && (
+          {!state.emailSubmitted && (
             <div className="bg-gradient-to-br from-blue-900 to-slate-900 rounded-3xl p-12 border-2 border-blue-700 mb-8">
               <div className="text-center mb-8">
                 <div className="text-5xl mb-4">📊</div>
@@ -372,15 +373,15 @@ function App() {
                 <div className="text-left max-w-md mx-auto space-y-3 text-slate-300 mb-8">
                   <div className="flex items-start gap-3">
                     <span className="text-green-400 text-xl">✓</span>
-                    <span>The 3 specific moves to close YOUR gap (not generic advice)</span>
+                    <span>Discover which changes will add the most value to your business</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-green-400 text-xl">✓</span>
-                    <span>What to do THIS WEEK (your first action step)</span>
+                    <span>Know exactly what to do this week to start closing your gap</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-green-400 text-xl">✓</span>
-                    <span>See where you rank against other businesses in your industry</span>
+                    <span>See how you compare to other business owners planning their exit</span>
                   </div>
                 </div>
                 <p className="text-sm text-slate-400">
@@ -408,71 +409,25 @@ function App() {
             </div>
           )}
 
-          {/* £50 OFFER - SHOWS AFTER EMAIL SUBMITTED */}
-          {state.email && (
+          {/* CONFIRMATION - SHOWS AFTER EMAIL SUBMITTED */}
+          {state.emailSubmitted && (
             <div className="bg-gradient-to-br from-blue-900 to-slate-900 rounded-3xl p-12 border-2 border-blue-700 mb-8">
-              <div className="text-center mb-8">
-                <div className="text-6xl mb-4">✅</div>
+              <div className="text-center">
+                <div className="text-6xl mb-6">✅</div>
                 <h3 className="text-4xl font-bold mb-4">
                   You're on the list.
                 </h3>
-                <p className="text-xl text-slate-300 mb-4">
-                  Check your inbox within 72 hours for your personalized report.
+                <p className="text-xl text-slate-300 mb-6">
+                  Check your inbox within 72 hours for your personalized Exit Gap Report.
                 </p>
                 <p className="text-lg text-slate-400">
-                  Due to the number of business owners requesting reports, we're compiling them in order of submission.
+                  You're helping build The Exit Index - the first platform that ranks businesses by exit-readiness. Your report will show you exactly where you stand and what to do next.
                 </p>
-              </div>
-
-              <div className="border-t-2 border-slate-700 pt-8 mt-8">
-                <h3 className="text-3xl font-bold mb-4 text-center">
-                  Can't Wait 72 Hours?
-                </h3>
-                <p className="text-xl text-slate-300 mb-8 text-center">
-                  Jump the queue and get your action plan within 5 days.
-                </p>
-
-                <div className="bg-slate-950 rounded-2xl p-8 mb-8">
-                  <h4 className="font-bold text-2xl mb-6 text-center">The Most Valuable Piece of Paper in Your Business</h4>
-                  <div className="space-y-3 text-slate-300 mb-6">
-                    <div className="flex items-start gap-3">
-                      <span className="text-green-400 text-xl">✓</span>
-                      <span>The 3 specific moves to close YOUR {formatCurrency(Math.abs(results.exitGap))} gap</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-green-400 text-xl">✓</span>
-                      <span>What to do THIS WEEK (not "someday")</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-green-400 text-xl">✓</span>
-                      <span>Delivered within 5 days, personalized to your business</span>
-                    </div>
-                  </div>
-                  <p className="text-slate-400 text-sm text-center mb-6">
-                    One page. No fluff. Just what you need to do right now.
-                  </p>
-                </div>
-
-                <div className="text-center mb-8">
-                  <div className="text-7xl font-black mb-2">{curr.symbol}50</div>
-                  <div className="text-xl text-slate-300">One-time payment</div>
-                  <div className="text-sm text-slate-500 mt-2">Skip the 72-hour wait. Get yours in 5 days.</div>
-                </div>
-
-                <button className="w-full bg-white text-slate-900 px-12 py-6 rounded-full text-2xl font-bold hover:bg-slate-100 transition-all transform hover:scale-105 mb-6">
-                  Jump The Queue - {curr.symbol}50 →
-                </button>
-
-                <div className="bg-slate-800 rounded-2xl p-6 text-center">
-                  <p className="text-slate-300 text-sm">
-                    Your gut has been telling you something needs to change.<br/>
-                    These numbers just confirmed it.<br/>
-                    <span className="font-bold text-white">The question is: how fast do you want to move?</span>
-                  </p>
-                </div>
               </div>
             </div>
           )}
+
+          
 
          <div className="text-center">
             <div className="bg-slate-800 rounded-3xl p-8 mb-6">
