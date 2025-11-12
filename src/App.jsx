@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './index.css'
+import axios from 'axios'
 
 function App() {
   const [state, setState] = useState({
@@ -233,12 +234,27 @@ function App() {
   const submitEmail = (e) => {
   e?.preventDefault()
   if (state.email && state.email.includes('@')) {
+    const results = calculateResults()
+    
     console.log('=== EXIT GAP CALCULATOR SUBMISSION ===')
     console.log('Country:', state.country)
     console.log('Email:', state.email)
-    console.log('Answers:', state.answers)
-    console.log('Results:', calculateResults())
+    console.log('Results:', results)
     console.log('=====================================')
+    
+    // Send to ConvertKit via their form API
+    if (window.ck && window.ck.submitForm) {
+      window.ck.submitForm({
+        formId: 'YOUR_FORM_ID',
+        email: state.email,
+        fields: {
+          exit_score: results.score,
+          country: state.country
+        }
+      })
+      console.log('✅ Sent to ConvertKit')
+    }
+    
     setState({ ...state, emailSubmitted: true })
   }
 }
