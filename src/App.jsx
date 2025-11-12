@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import './index.css'
-import axios from 'axios'
 
 function App() {
   const [state, setState] = useState({
@@ -231,7 +230,7 @@ function App() {
     }
   }
 
-  const submitEmail = (e) => {
+  const submitEmail = async (e) => {
   e?.preventDefault()
   if (state.email && state.email.includes('@')) {
     const results = calculateResults()
@@ -242,17 +241,32 @@ function App() {
     console.log('Results:', results)
     console.log('=====================================')
     
-    // Send to ConvertKit via their form API
-    if (window.ck && window.ck.submitForm) {
-      window.ck.submitForm({
-        formId: 'YOUR_FORM_ID',
-        email: state.email,
-        fields: {
-          exit_score: results.score,
-          country: state.country
-        }
+    // Send to our serverless function
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: state.email,
+          exitScore: results.score,
+          country: state.country,
+          currentValue: results.actualValue,
+          targetValue: results.targetValue,
+          exitGap: results.exitGap
+        })
       })
-      console.log('✅ Sent to ConvertKit')
+
+      const data = await response.json()
+
+      if (response.ok) {
+        console.log('✅ Sent to ConvertKit:', data)
+      } else {
+        console.error('❌ ConvertKit error:', data)
+      }
+    } catch (error) {
+      console.error('❌ Request failed:', error)
     }
     
     setState({ ...state, emailSubmitted: true })
