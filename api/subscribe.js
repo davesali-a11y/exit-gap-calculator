@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   try {
     // Call ConvertKit API
     const response = await fetch(
-      `https://api.convertkit.com/v3/forms/1e9c7f0611/subscribe`,
+      `https://hustling-hustler-4651.kit.com/1e9c7f0611`,
       {
         method: 'POST',
         headers: {
