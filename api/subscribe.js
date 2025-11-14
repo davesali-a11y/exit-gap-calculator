@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          api_key: 'O5_gQl3ZZoHMnAFSBo-tNulix77jFYrYhKsWAhAFOwE',
+          api_key: 'Q_c4PaWhe0EoSxQVyhMmjw',
           email: email
         })
       }
