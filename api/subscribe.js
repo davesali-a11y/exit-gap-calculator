@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   try {
     // Send to ConvertKit
     const ckResponse = await fetch(
-      `https://api.convertkit.com/v3/forms/1e9c7f0611/subscribe`,
+      `https://api.convertkit.com/v3/forms/8761790/subscribe`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
