@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/test",
+      "destination": "https://get.theexitindex.com/l/test",
+      "permanent": true
+    }
+  ]
+}
