@@ -254,7 +254,19 @@ export default function Calculator() {
           country: state.country,
           currentValue: results.actualValue,
           targetValue: results.targetValue,
-          exitGap: results.exitGap
+          exitGap: results.exitGap,
+          
+          // Add all question responses
+          exitStage: state.answers.exitStage?.label || '',
+          businessType: state.answers.businessType?.label || '',
+          locations: state.answers.locations?.label || '',
+          revenue: state.answers.revenue?.label || '',
+          margin: state.answers.margin?.label || '',
+          thinkWorth: state.answers.thinkWorth?.label || '',
+          wantAmount: state.answers.wantAmount?.label || '',
+          ownerDependence: state.answers.ownerDependence?.label || '',
+          onlineReputation: state.answers.onlineReputation?.label || '',
+          documentation: state.answers.documentation?.label || ''
         })
       })
 

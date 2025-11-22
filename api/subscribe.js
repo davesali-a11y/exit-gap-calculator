@@ -3,7 +3,25 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { email, exitScore, country, currentValue, targetValue, exitGap } = req.body
+  const { 
+    email, 
+    exitScore, 
+    country, 
+    currentValue, 
+    targetValue, 
+    exitGap,
+    // Add all question responses
+    exitStage,
+    businessType,
+    locations,
+    revenue,
+    margin,
+    thinkWorth,
+    wantAmount,
+    ownerDependence,
+    onlineReputation,
+    documentation
+  } = req.body
 
   if (!email || !email.includes('@')) {
     return res.status(400).json({ error: 'Valid email required' })
@@ -23,7 +41,7 @@ export default async function handler(req, res) {
       }
     )
 
-    // Send to Make.com webhook
+    // Send to Make.com webhook with ALL data
     const makeResponse = await fetch(
       'https://hook.eu1.make.com/psi09aj1iqf3xlamub11vs5bc5bfj0cu',
       {
@@ -36,7 +54,19 @@ export default async function handler(req, res) {
           currentValue: currentValue,
           targetValue: targetValue,
           exitGap: exitGap,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          
+          // Add all question responses
+          exitStage: exitStage,
+          businessType: businessType,
+          locations: locations,
+          revenue: revenue,
+          margin: margin,
+          thinkWorth: thinkWorth,
+          wantAmount: wantAmount,
+          ownerDependence: ownerDependence,
+          onlineReputation: onlineReputation,
+          documentation: documentation
         })
       }
     )
