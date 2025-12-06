@@ -21,6 +21,24 @@ export default function LandingPage() {
         
         <p className="mt-16 text-sm text-gray-500">
           Built for business owners who built something worth protecting.
+
+          {/* Mission Context */}
+          <div style={{
+            maxWidth: '700px',
+            margin: '60px auto 0',
+            padding: '30px',
+            background: '#f8f9fa',
+            borderRadius: '8px'
+          }}>
+            <p style={{
+              fontSize: '14px',
+              color: '#666',
+              lineHeight: '1.7',
+              margin: '0'
+            }}>
+              <strong style={{ color: '#333' }}>This isn't professional advice—here's why that's good:</strong> Professional valuations cost £15-30K and take weeks. They're essential when you're ready to sell. But most business owners don't discover their gaps until they're IN negotiations—when it's too late to fix them. This free assessment shows you what to ask your CFO, accountant, and advisors before you need expensive due diligence.
+            </p>
+          </div>
         </p>
       </div>
     </div>

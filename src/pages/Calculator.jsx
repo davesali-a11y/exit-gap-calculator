@@ -360,6 +360,29 @@ export default function Calculator() {
             <div className="text-slate-400 text-sm font-semibold mb-4">YOUR EXIT READINESS SCORE</div>
             <div className="text-9xl font-black mb-4">{results.score}</div>
             <div className="text-2xl text-slate-300">Out of 100</div>
+
+            {/* Value Exclaimer */}
+          <div style={{
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            borderRadius: '12px',
+            padding: '30px',
+            margin: '40px 0',
+            color: 'white'
+          }}>
+            <h3 style={{ margin: '0 0 15px 0', fontSize: '20px' }}>⚡ This Isn't Financial Advice—It's Better</h3>
+            
+            <p style={{ marginBottom: '15px' }}>Financial advisors tell you what your business is worth today. This shows you what buyers will actually pay—and the specific gaps costing you money.</p>
+            
+            <p style={{ marginBottom: '15px' }}><strong>Why that matters:</strong></p>
+            
+            <ul style={{ margin: '0', paddingLeft: '20px', lineHeight: '1.8' }}>
+              <li>Your accountant knows your profit. They can't tell you why buyers discount owner-dependent businesses by 40%.</li>
+              <li>Your lawyer can structure the deal. They can't tell you why poor documentation cuts your valuation by hundreds of thousands.</li>
+              <li>Your CFO knows your numbers. They don't know what private equity looks for when evaluating acquisitions.</li>
+            </ul>
+            
+            <p style={{ marginTop: '20px', borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '20px', fontSize: '14px' }}>This gives you the <strong>questions to ask your professional team</strong>—so you're not discovering problems during negotiations when it's too late to fix them.</p>
+          </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mb-16">
