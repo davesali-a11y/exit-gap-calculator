@@ -200,6 +200,8 @@ export default function Calculator() {
     const nextStep = state.currentStep + 1
     
     // If this was the last question, show results immediately
+    
+    
     if (nextStep === questions.length) {
       setState({ 
         ...state, 
@@ -207,6 +209,7 @@ export default function Calculator() {
         currentStep: nextStep,
         showResults: true
       })
+       captureAnonymousResult() // add this line
     } else {
       setState({ 
         ...state, 
@@ -229,6 +232,39 @@ export default function Calculator() {
       setState({ ...state, currentStep: -2 })
     }
   }
+
+ 
+
+const captureAnonymousResult = async () => {
+  const results = calculateResults()
+  try {
+    await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: 'anonymous',
+        exitScore: results.score,
+        country: state.country,
+        currentValue: results.actualValue,
+        targetValue: results.targetValue,
+        exitGap: results.exitGap,
+        exitStage: state.answers.exitStage?.label || '',
+        businessType: state.answers.businessType?.label || '',
+        locations: state.answers.locations?.label || '',
+        revenue: state.answers.revenue?.label || '',
+        margin: state.answers.margin?.label || '',
+        thinkWorth: state.answers.thinkWorth?.label || '',
+        wantAmount: state.answers.wantAmount?.label || '',
+        ownerDependence: state.answers.ownerDependence?.label || '',
+        onlineReputation: state.answers.onlineReputation?.label || '',
+        documentation: state.answers.documentation?.label || '',
+        anonymous: true
+      })
+    })
+  } catch (err) {
+    console.log('Anonymous capture failed:', err)
+  }
+}
 
   const submitEmail = async (e) => {
   e?.preventDefault()

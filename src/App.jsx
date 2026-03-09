@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Calculator from './pages/Calculator';
 
+import { Analytics } from '@vercel/analytics/react'; // at the top of the file
+
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +27,7 @@ function App() {
           <p style={{ marginTop: '20px', fontSize: '12px' }}>© 2025 The Exit Index. All rights reserved.</p>
         </div>
       </footer>
+      <Analytics />
     </BrowserRouter>
    
   );
