@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Calculator from './pages/Calculator';
+import Checklist from './pages/Checklist';
 
 import { Analytics } from '@vercel/analytics/react'; // at the top of the file
 
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/calculator" element={<Calculator />} />
+        <Route path="/checklist" element={<Checklist />} />
       </Routes>
 
        {/* Footer Disclaimer */}
