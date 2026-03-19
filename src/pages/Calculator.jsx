@@ -167,7 +167,7 @@ export default function Calculator() {
 
     const actualValue = revenue * margin * totalMultiplier
     const targetValue = state.answers.wantAmount?.value || actualValue * 1.5
-    const exitGap = targetValue - actualValue
+    const exitGap = Math.max(0, targetValue - actualValue)
     const exitGapPercentage = targetValue > 0 ? ((exitGap / targetValue) * 100) : 0
 
     const maxMultiplier = baseMultiplier * 1.5 * 1.6 * 1.5 * 1.3 * 1.4 * 1.4
@@ -555,80 +555,6 @@ const captureAnonymousResult = async () => {
             </button>
           </div>
         </div>
-
-{/* Trusted Advisors Strip */}
-<div style={{
-  marginTop: '40px',
-  padding: '24px',
-  background: 'rgba(255,255,255,0.05)',
-  borderRadius: '12px',
-  border: '1px solid rgba(255,255,255,0.1)',
-  textAlign: 'center'
-}}>
-  <p style={{
-    fontSize: '11px',
-    letterSpacing: '0.12em',
-    textTransform: 'uppercase',
-    color: 'rgba(255,255,255,0.4)',
-    marginBottom: '16px',
-    fontWeight: '500'
-  }}>
-    Trusted Advisors
-  </p>
-  <p style={{
-    fontSize: '13px',
-    color: 'rgba(255,255,255,0.5)',
-    marginBottom: '20px',
-    fontWeight: '300',
-    lineHeight: '1.6'
-  }}>
-    Not sure what to do with your result? These firms work with business owners at exactly this stage.
-  </p>
-  <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '40px',
-    flexWrap: 'wrap',
-    marginBottom: '16px'
-  }}>
-    {/* ActionCoach */}
-    <a href="https://theexitindex.com/trusted-advisors" 
-       target="_blank" 
-       rel="noopener noreferrer"
-       style={{opacity: '0.7', transition: 'opacity 0.2s'}}
-       onMouseEnter={e => e.currentTarget.style.opacity='1'}
-       onMouseLeave={e => e.currentTarget.style.opacity='0.7'}>
-      <img 
-        src="/logos/actioncoach.svg" 
-        alt="ActionCoach" 
-        style={{height: '28px', filter: 'brightness(0) invert(1)'}}
-      />
-    </a>
-    {/* iFranchise Group */}
-    <a href="https://theexitindex.com/trusted-advisors"
-       target="_blank"
-       rel="noopener noreferrer" 
-       style={{opacity: '0.7', transition: 'opacity 0.2s'}}
-       onMouseEnter={e => e.currentTarget.style.opacity='1'}
-       onMouseLeave={e => e.currentTarget.style.opacity='0.7'}>
-      <img 
-        src="/logos/ifranchise.svg" 
-        alt="iFranchise Group" 
-        style={{height: '28px', filter: 'brightness(0) invert(1)'}}
-      />
-    </a>
-  </div>
-  <a href="https://theexitindex.com/trusted-advisors" style={{
-    fontSize: '11px',
-    color: 'rgba(255,255,255,0.35)',
-    textDecoration: 'none',
-    letterSpacing: '0.08em'
-  }}>
-    View all trusted advisors →
-  </a>
-</div>
-
       </div>
     )
   }
