@@ -3,6 +3,13 @@ import LandingPage from './pages/LandingPage';
 import Calculator from './pages/Calculator';
 import Checklist from './pages/Checklist';
 import TrustedAdvisors from './pages/TrustedAdvisors';
+import Intelligence from './pages/Intelligence/index';
+import TheExitGap from './pages/Intelligence/TheExitGap';
+import TheSilverTsunami from './pages/Intelligence/TheSilverTsunami';
+import The20000 from './pages/Intelligence/The20000';
+import TheAdvisorGap from './pages/Intelligence/TheAdvisorGap';
+import Manifesto from './pages/Manifesto';
+import Glossary from './pages/Glossary';
 
 import { Analytics } from '@vercel/analytics/react'; // at the top of the file
 
@@ -14,6 +21,13 @@ function App() {
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/checklist" element={<Checklist />} />
         <Route path="/trusted-advisors" element={<TrustedAdvisors />} />
+        <Route path="/intelligence" element={<Intelligence />} />
+        <Route path="/intelligence/the-exit-gap" element={<TheExitGap />} />
+        <Route path="/intelligence/the-silver-tsunami" element={<TheSilverTsunami />} />
+        <Route path="/intelligence/the-20000" element={<The20000 />} />
+        <Route path="/intelligence/the-advisor-gap" element={<TheAdvisorGap />} />
+        <Route path="/manifesto" element={<Manifesto />} />
+        <Route path="/glossary" element={<Glossary />} />
       </Routes>
 
        {/* Footer Disclaimer */}
