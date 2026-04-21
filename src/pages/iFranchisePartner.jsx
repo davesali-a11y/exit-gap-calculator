@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export default function iFranchisePartner() {
+export default function IFranchisePartner() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {

@@ -10,7 +10,7 @@ import The20000 from './pages/Intelligence/The20000';
 import TheAdvisorGap from './pages/Intelligence/TheAdvisorGap';
 import Manifesto from './pages/Manifesto';
 import Glossary from './pages/Glossary';
-import iFranchisePartner from './pages/iFranchisePartner';
+import IFranchisePartner from './pages/iFranchisePartner';
 
 import { Analytics } from '@vercel/analytics/react';
 
@@ -34,7 +34,7 @@ function AppInner() {
         <Route path="/intelligence/the-advisor-gap" element={<TheAdvisorGap />} />
         <Route path="/manifesto" element={<Manifesto />} />
         <Route path="/glossary" element={<Glossary />} />
-        <Route path="/founding-partner/ifranchise" element={<iFranchisePartner />} />
+        <Route path="/founding-partner/ifranchise" element={<IFranchisePartner />} />
       </Routes>
 
       {/* Footer Disclaimer — hidden on standalone invitation pages */}
