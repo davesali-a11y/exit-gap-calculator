@@ -239,7 +239,7 @@ export default function Manifesto() {
               The window is open. The wave is moving. The infrastructure is being built.
             </p>
             <div className="signoff-name">
-              <strong>David Sali</strong>
+              <strong>David Tamale-Sali</strong>
               <span>Founder, The Exit Index &mdash; theexitindex.com</span>
             </div>
           </div>
