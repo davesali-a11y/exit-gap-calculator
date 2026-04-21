@@ -124,7 +124,7 @@ export default function IFranchisePartner() {
         .ifp-intro {
           font-size: 1.1rem;
           line-height: 1.8;
-          color: #3a3733;
+          color: #1A1A2E;
           margin-bottom: 3.5rem;
           padding-bottom: 3.5rem;
           border-bottom: 1px solid var(--rule);
@@ -191,7 +191,7 @@ export default function IFranchisePartner() {
         .ifp-pillar-text {
           font-size: 1rem;
           line-height: 1.7;
-          color: #3a3733;
+          color: #1A1A2E;
         }
 
         /* ── Investment block ── */
@@ -378,7 +378,7 @@ export default function IFranchisePartner() {
               href="https://buy.stripe.com/cNi14o8QK2c48Id8Upe3e01"
               className="ifp-cta"
             >
-              Secure the iFranchise Founding Partner Spot
+              Join the Dream Team
             </a>
           </div>
 
