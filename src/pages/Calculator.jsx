@@ -203,13 +203,13 @@ export default function Calculator() {
     
     
     if (nextStep === questions.length) {
-      setState({ 
-        ...state, 
+      setState({
+        ...state,
         answers: newAnswers,
         currentStep: nextStep,
         showResults: true
       })
-       captureAnonymousResult() // add this line
+      captureAnonymousResult(newAnswers)
     } else {
       setState({ 
         ...state, 
@@ -235,30 +235,45 @@ export default function Calculator() {
 
  
 
-const captureAnonymousResult = async () => {
-  const results = calculateResults()
+const captureAnonymousResult = async (answers) => {
+  // Calculate results using the finalised answers (state.answers lags behind by one render)
+  const revenue = answers.revenue?.value || 0
+  const margin = answers.margin?.value || 0
+  const baseMultiplier = 3
+  const totalMultiplier = baseMultiplier *
+    (answers.businessType?.multiplier || 1) *
+    (answers.locations?.multiplier || 1) *
+    (answers.ownerDependence?.multiplier || 1) *
+    (answers.onlineReputation?.multiplier || 1) *
+    (answers.documentation?.multiplier || 1) *
+    (answers.margin?.multiplier || 1)
+  const actualValue = revenue * margin * totalMultiplier
+  const targetValue = answers.wantAmount?.value || actualValue * 1.5
+  const exitGap = Math.max(0, targetValue - actualValue)
+  const maxMultiplier = baseMultiplier * 1.5 * 1.6 * 1.5 * 1.3 * 1.4 * 1.4
+  const score = Math.min(100, Math.round((totalMultiplier / maxMultiplier) * 100))
+
   try {
     await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email: 'anonymous',
-        exitScore: results.score,
+        email: '',
+        exitScore: score,
         country: state.country,
-        currentValue: results.actualValue,
-        targetValue: results.targetValue,
-        exitGap: results.exitGap,
-        exitStage: state.answers.exitStage?.label || '',
-        businessType: state.answers.businessType?.label || '',
-        locations: state.answers.locations?.label || '',
-        revenue: state.answers.revenue?.label || '',
-        margin: state.answers.margin?.label || '',
-        thinkWorth: state.answers.thinkWorth?.label || '',
-        wantAmount: state.answers.wantAmount?.label || '',
-        ownerDependence: state.answers.ownerDependence?.label || '',
-        onlineReputation: state.answers.onlineReputation?.label || '',
-        documentation: state.answers.documentation?.label || '',
-        anonymous: true
+        currentValue: actualValue,
+        targetValue: targetValue,
+        exitGap: exitGap,
+        exitStage: answers.exitStage?.label || '',
+        businessType: answers.businessType?.label || '',
+        locations: answers.locations?.label || '',
+        revenue: answers.revenue?.label || '',
+        margin: answers.margin?.label || '',
+        thinkWorth: answers.thinkWorth?.label || '',
+        wantAmount: answers.wantAmount?.label || '',
+        ownerDependence: answers.ownerDependence?.label || '',
+        onlineReputation: answers.onlineReputation?.label || '',
+        documentation: answers.documentation?.label || ''
       })
     })
   } catch (err) {
