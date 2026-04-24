@@ -11,10 +11,11 @@ import TheAdvisorGap from './pages/Intelligence/TheAdvisorGap';
 import Manifesto from './pages/Manifesto';
 import Glossary from './pages/Glossary';
 import IFranchisePartner from './pages/iFranchisePartner';
+import Exit101Form from './pages/Exit101Form';
 
 import { Analytics } from '@vercel/analytics/react';
 
-const STANDALONE_ROUTES = ['/founding-partner/ifranchise'];
+const STANDALONE_ROUTES = ['/founding-partner/ifranchise', '/exit-101'];
 
 function AppInner() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function AppInner() {
         <Route path="/manifesto" element={<Manifesto />} />
         <Route path="/glossary" element={<Glossary />} />
         <Route path="/founding-partner/ifranchise" element={<IFranchisePartner />} />
+        <Route path="/exit-101" element={<Exit101Form />} />
       </Routes>
 
       {/* Footer Disclaimer — hidden on standalone invitation pages */}
