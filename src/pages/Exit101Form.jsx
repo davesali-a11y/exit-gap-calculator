@@ -20,7 +20,7 @@ export default function Exit101Form() {
     e.preventDefault()
     setSubmitting(true)
     try {
-      await fetch('https://hook.eu1.make.com/psi09aj1iqf3xlamub11vs5bc5bfj0cu', {
+      await fetch(import.meta.env.VITE_EXIT101_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
