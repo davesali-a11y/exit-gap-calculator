@@ -10,6 +10,11 @@
       "source": "/test",
       "destination": "https://get.theexitindex.com/l/test",
       "permanent": true
+    },
+    {
+      "source": "/exit-101",
+      "destination": "https://docs.google.com/forms/d/e/1FAIpQLSf75guu1UTJLnu5aCeTq-bQ0ceLiG3JVc4auT8htB8qYUuPqw/viewform?usp=publish-editor",
+      "permanent": false
     }
   ]
 }
