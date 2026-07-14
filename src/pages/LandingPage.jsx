@@ -185,7 +185,6 @@ const styles = `
     color: var(--grey);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    opacity: 0.7;
   }
 
   .scroll-hint {
@@ -206,7 +205,6 @@ const styles = `
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--grey);
-    opacity: 0.5;
   }
 
   .scroll-line {
@@ -483,7 +481,7 @@ const styles = `
     font-size: 36px;
     font-weight: 700;
     color: var(--gold);
-    opacity: 0.4;
+    opacity: 0.7;
     line-height: 1;
     margin-bottom: 12px;
   }
@@ -706,14 +704,12 @@ const styles = `
     font-size: 12px;
     color: var(--grey);
     line-height: 1.7;
-    opacity: 0.6;
     max-width: 640px;
   }
 
   .footer-copy {
     font-size: 11px;
     color: var(--grey);
-    opacity: 0.4;
     letter-spacing: 0.05em;
   }
 
@@ -773,7 +769,7 @@ export default function LandingPage() {
   return (
     <>
       <style>{styles}</style>
-      <div className="landing">
+      <main className="landing">
         <div className="grain" />
 
         {/* ── HERO ── */}
@@ -1035,7 +1031,7 @@ export default function LandingPage() {
             </p>
           </div>
         </footer>
-      </div>
+      </main>
     </>
   );
 }
